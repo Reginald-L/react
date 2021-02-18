@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <title>JSX创建VDOM</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <!-- 注意这里的类型必须是text/babel, 而且不能不写 -->
+    <script type="text/babel">
+        // 1- creating a VDOM
+        // 注意这里用的是JSX语法, 所以虚拟dom的值不要加引号.
+        const VDOM = (
+            <h1 id="title">
+                <span>hello react</span>    
+            </h1>
+        )
+        // 2- adding VDOM to page
+        ReactDOM.render(VDOM, document.getElementsByClassName("test")[0])
+    </script>
+</body>
+
+</html>
