@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <title>函数式组件开发</title>
+</head>
+<body>
+    <div class="container"></div>
+    <script type="text/babel">
+        //创建组件
+        //函数名必须以大写字母开头, 且必须有返回值
+        //注意在该组件函数中, this是undefined. 因为babel会开启严格模式
+        function MyCmponent(){
+            return <h2>这是我的第一个函数式组件</h2>
+        }
+        //渲染组件到页面
+        //组件标签必须是闭合的
+        ReactDOM.render(<MyCmponent/>, document.getElementsByClassName("container")[0]);
+        /*
+            react函数式组件的执行过程:
+                1: React解析MyComponent组件标签,找到对应的组件
+                2: 调用对应的组件函数, 将返回的虚拟DOM转换为真实DOM, 然后渲染在页面中. 
+        */
+    </script>
+</body>
+</html>
