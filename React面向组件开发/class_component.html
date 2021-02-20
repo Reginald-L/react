@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <title>Class_Component</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        //创建一个类, 继承React.Component
+        class MyComponent extends React.Component {
+            render(){
+                return <h2>This is my first class component</h2>
+            }
+        }
+        ReactDOM.render(<MyComponent/>, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+</html>
