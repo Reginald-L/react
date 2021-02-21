@@ -17,17 +17,28 @@
             constructor(props){
                 super(props)
                 //在构造器中初始化状态, state的值应该是一个对象, {prop: value, prop2: value,---}
-                this.state = {isHot: true}
+                this.state = {isHot: true, wind: '微风'}
+                //bind方法会生成一个新方法, 这个方法的this就是绑定的this  ---> 解决changeWeather方法中的this指向
+                this.changeWeather = this.changeWeather.bind(this)
             }
             render() {
-                const {isHot} = this.state.isHot
-                return <h2 onClick={this.changeWeather}>今天的天气很{isHot ? "炎热" : "凉爽"}!</h2>
+                //这个方法会执行 1 + n 次 n为状态改变的次数
+                const {isHot, wind} = this.state
+                return <h2 onClick={this.changeWeather}>今天的天气很{isHot ? "炎热" : "凉爽"}, {wind}!</h2>
             }
             /*
-                
+                正常情况下, 这里的this应该是undefined, 因为babel自动开启严格模式;
+                changeWeather方法是存放在原型中的, 是通过this调用的, 但是在onClick = {this.changeWeather}时
+                将该方法的副本交给了onClick, 所以相当与直接调用该方法, 导致this的丢失
             */
             changeWeather(){
-                console.log(this)
+                // console.log(this)
+                const isHot = this.state.isHot
+                //state中的值是不可以直接更改的, 要不然react是不认可的; 
+                //例如: this.state.isHot = true  ---> 这就是直接更改, React是不会承认isHot的值发生改变
+                //想要改变state的值需要调用内置函数setState
+                //this.setState({isHot: !isHot})
+                this.setState({isHot:!isHot})
             }
         }
         ReactDOM.render(<Weather/>, document.getElementsByClassName("test")[0]);
