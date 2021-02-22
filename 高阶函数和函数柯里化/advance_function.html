@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>高阶函数</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        /*
+            高阶函数: 满足以下之一即可
+                1: 若A函数, 接受的参数是一个函数, 那么A就是高阶函数
+                2: 若A函数, 调用的返回值依然是一个函数, 那么A 就是高阶函数
+
+            函数柯里化:
+                通过函数调用继续返回函数的方式, 实现多次接受参数最后统一处理的函数编码形式
+        */
+        class Login extends React.Component{
+            //初始化状态
+            state = {
+                username: "",
+                password: ""
+            }
+            //保存用户名到状态中
+            saveUsername = (event)=>{
+                this.setState({username: event.target.value})
+            }
+            //保存密码到状态中
+            savePassword = (event)=>{
+                this.setState({password: event.target.value})
+            }
+            //将saveUsername与savePassword合并为一个方法, 因为他们两个方法重复度太高
+            //这就是一个高阶函数, 且用到了函数的柯里化技术
+            saveFormData = (dataType)=>{
+                console.log(dataType)
+                return (event)=>{
+                    this.setState({[dataType]: event.target.value})
+                }
+            }
+            //submit的回调函数
+            handleSubmit = (event)=>{
+                event.preventDefault();
+                const {username,password} = this.state;
+                alert('username: ' + username + '---' + 'password:' +  password)
+            }
+
+            render(){
+                return (
+                    <form action="https://www.baidu.com" onSubmit={this.handleSubmit}>
+                        {/*
+                            input onChange={this.saveFormData('username')}
+                            这个代码会将saveFormData的返回值与onChange进行绑定, 所以saveFormData的返回值应该是一个函数, 
+                            即真正实现改变后的逻辑
+                        */}
+                        name: <input onChange={this.saveFormData('username')} type="text" name="username"/>
+                        password: <input onChange={this.saveFormData('password')} type="password" name="password"/>
+                        <button>login</button>
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login/>, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+</html>
