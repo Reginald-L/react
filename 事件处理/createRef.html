@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>事件处理</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        class Demo extends React.Component{
+            /*
+                1: 通过onXXX属性指定事件处理函数
+                    a: React使用的是自定义事件 (onClick), 而不是原生JS 中的事件 (onclick)
+                        这是为了更好的兼容性
+                    b: React中的事件通过事件委托方式处理的, 委托给组件最外层的元素
+                        原理就是事件冒泡, 效率更好
+                2: 通过event.target得到事件发生的DOM元素对象
+                    当发生事件的元素与要操作的事件是同一个的时候, 可以省略ref
+                    ref频繁的使用会导致效率低下, 但是可以使用event.target代替ref
+                    例如:
+                    <input type="text" placeholder="失去焦点提示数据" onBlur={this.getDataByBlur}/>
+                    getDataByBlur = (event)=>{
+                        alert(event.target.value)
+                    }
+            */
+            myRef = React.createRef()
+            myRef2 = React.createRef()
+            render(){
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" placeholder="点击按钮提示数据"/>
+                        <button onClick={this.getData}>click for get data</button>
+                        <input type="text" placeholder="失去焦点提示数据" onBlur={this.getDataByBlur}/>
+                    </div>
+                )
+            }
+            getData = ()=>{
+                alert(this.myRef.current.value)
+            }
+            getDataByBlur = (event)=>{
+                alert(event.target.value)
+            }
+        }
+        ReactDOM.render(<Demo/>, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+</html>

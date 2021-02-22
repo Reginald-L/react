@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>表单数据收集</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        /*
+            受控组件
+            随着输入的改变, 顺势将其值维护到状态中, 以便后期使用
+            相比非受控, 受控的优势在于没有用到ref
+        */
+        class Login extends React.Component{
+            //初始化状态
+            state = {
+                username: "",
+                password: ""
+            }
+            //保存用户名到状态中
+            saveUsername = (event)=>{
+                this.setState({username: event.target.value})
+            }
+            //保存密码到状态中
+            savePassword = (event)=>{
+                this.setState({password: event.target.value})
+            }
+            //submit的回调函数
+            handleSubmit = (event)=>{
+                event.preventDefault();
+                const {username,password} = this.state;
+                alert('username: ' + username + '---' + 'password:' +  password)
+            }
+
+            render(){
+                return (
+                    <form action="https://www.baidu.com" onSubmit={this.handleSubmit}>
+                        name: <input onChange={this.saveUsername} type="text" name="username"/>
+                        password: <input onChange={this.savePassword} type="password" name="password"/>
+                        <button>login</button>
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login/>, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+</html>
