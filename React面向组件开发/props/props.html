@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <!-- prop-types 用于对react组件中的标签属性的类型进行限制 -->
+    <!-- PropTypes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>PROPS</title>
+</head>
+<body>
+    <div class="test1"></div>
+    <div class="test2"></div>
+    <div class="test3"></div>
+    <div class="test4"></div>
+
+    <script type="text/babel"> 
+        // 特别注意: props的值是只读的, 不允许进行修改
+        class Person extends React.Component{
+            render(){
+                const {name, age, sex} = this.props
+                return (
+                    <ul>
+                        <li>Name : {name}</li>
+                        <li>Age : {age + 1}</li>
+                        <li>Sex : {sex}</li>    
+                    </ul>
+                )
+            }
+        }
+        //限制Person属性的类型
+        Person.propTypes = {
+            // 限制name属性的值为string类型, 且是必须有该属性的
+            //15及以前版本使用React.PropTypes替换PropTypes
+            name: PropTypes.string.isRequired,
+            sex: PropTypes.string,
+            age: PropTypes.number,
+            // 限制speak的类型为一个函数
+            speak: PropTypes.func
+        }
+        //为person属性设置默认值
+        Person.defaultProps = {
+            sex: 'man',
+            age: 18
+        }
+        function speak(){
+            console.log("speaking")
+        }
+        ReactDOM.render(<Person name="Tom" age={18} sex="man" speak={speak}/>, document.getElementsByClassName("test1")[0]);
+        //发生错误: 因为speak的类型不正确, 希望得到一个function, 但是却得到一个string
+        // ReactDOM.render(<Person name="Jerry" age={19} sex="woman" speak="1"/>, document.getElementsByClassName("test2")[0]);
+        ReactDOM.render(<Person name="Baby" age={20} sex="man"/>, document.getElementsByClassName("test3")[0]);
+        /*批量传数据*/
+        const p = {name: 'JACK', age: 18, sex: 'man'}
+        ReactDOM.render(<Person {...p}/>, document.getElementsByClassName("test4")[0])
+    </script>
+</body>
+</html>

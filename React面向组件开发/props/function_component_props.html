@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>函数式组件使用props属性</title>
+</head>
+
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        function Person(props) {
+            return (
+                <ul>
+                    <li>Name : {props.name}</li>
+                    <li>Age : {props.age + 1}</li>
+                    <li>Sex : {props.sex}</li>
+                </ul>
+            )
+        }
+        Person.propTypes = {
+            name: PropTypes.string.isRequired,
+            age: PropTypes.number,
+            sex: PropTypes.string
+        }
+        Person.defaultProps = {
+            age: 18,
+            sex: 'man'
+        }
+
+        ReactDOM.render(<Person name="Tom"/>, document.getElementsByClassName("test")[0])
+    </script>
+</body>
+
+</html>

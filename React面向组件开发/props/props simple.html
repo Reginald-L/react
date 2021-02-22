@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <!-- prop-types 用于对react组件中的标签属性的类型进行限制 -->
+    <!-- PropTypes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>PROPS</title>
+</head>
+<body>
+    <div class="test1"></div>
+    <div class="test2"></div>
+    <div class="test3"></div>
+    <div class="test4"></div>
+
+    <script type="text/babel"> 
+        class Person extends React.Component{
+            render(){
+                const {name, age, sex} = this.props
+                return (
+                    <ul>
+                        <li>Name : {name}</li>
+                        <li>Age : {age + 1}</li>
+                        <li>Sex : {sex}</li>    
+                    </ul>
+                )
+            }
+            /*
+                为类自身添加一个属性, 名为propTypes, 值为{...}
+            */
+            static propTypes = {
+                name: PropTypes.string.isRequired,
+                sex: PropTypes.string,
+                age: PropTypes.number,
+                speak: PropTypes.func
+            }
+            static defaultProps = {
+                sex: 'man',
+                age: 18
+            }
+        }
+
+        ReactDOM.render(<Person name="Tom" age={18} sex="man" speak={speak}/>, document.getElementsByClassName("test1")[0]);
+        const p = {name: 'JACK', age: 18, sex: 'man'}
+        ReactDOM.render(<Person {...p}/>, document.getElementsByClassName("test4")[0])
+        
+        function speak(){
+            console.log("speaking")
+        }
+   </script>
+</body>
+</html>

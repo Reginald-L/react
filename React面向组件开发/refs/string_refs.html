@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>组件实例的第三个属性-refs-string ref</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        class Demo extends React.Component{
+            render(){
+                /*
+                    ref="input1"就是一个典型的字符串类型的ref, 但是这种形式的ref会存在效率问题, 所以官方不推荐使用;
+                    当语句执行完成后, react会将input1作为key, 然后对应的节点作为value组成一个key-value的对象存入到
+                    当前实例的refs属性中, 通过this.refs.input1即可获取到对应的节点, 对其进行操作.
+                */
+                return (
+                    <div>
+                        <input ref="input1" type="text" placeholder="点击按钮提示数据"/>
+                        <button onClick={this.getData}>click for get data</button>
+                        <input ref="input2" type="text" placeholder="失去焦点提示数据" onBlur={this.getDataByBlur}/>
+                    </div>
+                )
+            }
+            getData = ()=>{
+                console.log(this.refs.input1.value)
+            }
+            getDataByBlur = ()=>{
+                alert(this.refs.input2.value)
+            }
+        }
+        ReactDOM.render(<Demo/>, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+</html>

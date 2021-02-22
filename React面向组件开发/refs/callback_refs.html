@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>组件实例的第三个属性-refs-callback ref</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        class Demo extends React.Component{
+            render(){
+                return (
+                    <div>
+                        {/*
+                            ref={(currentNode)=>{this.input1 = currentNode}}
+                            这就是典型的回调函数类型的ref, 其中currentNode表示当前节点, 所以该语句执行完毕后, react会为当前实例创建一个input1的属性,
+                            该属性会指向当前节点, 所以当需要使用的时候, 可以通过当前实例对象的this.input1获取节点,对其进行操作.
+
+                            这个方法会导致回调函数的两次执行, 第一次会传入null, 第二次才会传入当前节点, 但是这种问题不会造成任何问题, 
+                            所以这种形式也是最常见的
+
+                            回调函数的三个满足条件:
+                                1: 自己创建的
+                                2: 自己没有调用
+                                3: 该函数被执行了
+                        */}
+                        <input ref={(currentNode)=>{this.input1 = currentNode}} type="text" placeholder="点击按钮提示数据"/>
+                        <button onClick={this.getData}>click for get data</button>
+                        {/*
+                            {this.saveInput}
+                            saveInput = (currentNode)=>{
+                                this.input2 = currentNode
+                            }
+                            这是类绑定形式的回调ref, 这个与上一种的主要区别在于该方法只执行一次, 不会导致回调函数的第二次执行
+                        */}
+                        <input ref={this.saveInput} type="text" placeholder="失去焦点提示数据" onBlur={this.getDataByBlur}/>
+                    </div>
+                )
+            }
+            saveInput = (currentNode)=>{
+                this.input2 = currentNode
+            }
+            getData = ()=>{
+                alert(this.input1.value)
+            }
+            getDataByBlur = ()=>{
+                alert(this.input2.value)
+            }
+        }
+        ReactDOM.render(<Demo/>, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+</html>
