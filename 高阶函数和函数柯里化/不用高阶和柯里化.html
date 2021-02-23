@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>不用高阶和柯里化</title>
+</head>
+
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        class Login extends React.Component {
+            //初始化状态
+            state = {
+                username: "",
+                password: ""
+            }
+            //将saveUsername与savePassword合并为一个方法, 因为他们两个方法重复度太高
+            //这就是一个高阶函数, 且用到了函数的柯里化技术
+            saveFormData = (dataType, event) => {
+                this.setState({ [dataType]: event.target.value })
+            }
+            //submit的回调函数
+            handleSubmit = (event) => {
+                event.preventDefault();
+                const { username, password } = this.state;
+                alert('username: ' + username + '---' + 'password:' + password)
+            }
+
+            render() {
+                return (
+                    <form action="https://www.baidu.com" onSubmit={this.handleSubmit}>
+                        {/*
+                            
+                        */}
+                        name: <input onChange={ event => this.saveFormData('username', event) } type="text" name="username" />
+                        password: <input onChange={ event => this.saveFormData('password', event) } type="password" name="password" />
+                        <button>login</button>
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login />, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+
+</html>

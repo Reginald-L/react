@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>引出生命周期</title>
+</head>
+
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+
+        class Life extends React.Component {
+
+            state = {
+                opacity: 1
+            }
+
+            death = () => {
+                // clearInterval(this.timer);
+                //unmount === 卸载
+                ReactDOM.unmountComponentAtNode(document.getElementsByClassName("test")[0])
+            }
+            //只执行一次 ===> 组件被挂载后
+            componentDidMount(){
+                /*
+                    定时器
+                */
+                this.timer = setInterval(() => {
+                    let opacity = this.state.opacity;
+                    opacity -= 0.1
+                    if (opacity <= 0) {
+                        opacity = 1
+                    }
+                    this.setState({ opacity: opacity })
+                }, 200)
+            }
+            //只执行一次, 即在组件即将被卸载的时候
+            componentWillUnmount(){
+                console.log("组件即将被卸载")
+                clearInterval(this.timer);
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h2 style={{ opacity: this.state.opacity }}>React 学不会, 怎么办?</h2>
+                        <button onClick={this.death}>不活了</button>
+                    </div>
+                )
+            }
+        }
+        //mount === 挂载
+        ReactDOM.render(<Life />, document.getElementsByClassName("test")[0]);
+    </script>
+</body>
+
+</html>

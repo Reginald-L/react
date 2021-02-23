@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.0.0-beta.3/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+    <title>旧的组件生命周期</title>
+</head>
+<body>
+    <div class="test"></div>
+
+    <script type="text/babel">
+        //创建组件
+        class Calculate extends React.Component{
+            //构造器
+            constructor(props){
+                super(props);
+                console.log("count --- constructor")
+                //初始化状态
+                this.state = {count: 0}
+            }
+            //组件将要被装载
+            componentWillMount(){
+                console.log("count --- componentWillMount")
+            }
+            //组件装载完毕
+            componentDidMount(){
+                console.log("count --- componentDidMount")
+            }
+            //组件将要卸载
+            componentWillUnmount(){
+                console.log("count --- componentWillUnmount")
+            }
+            //组件是否可以更新
+            shouldComponentUpdate(){
+                console.log("count --- shouldComponentUpdate")
+                return true
+            }
+            //组件更新完毕
+            componentWillUpdate(){
+                console.log("count --- componentWillUpdate")
+            }
+            //组件更新完毕
+            componentDidUpdate(){
+                console.log("count --- componentDidUpdate")
+            }
+            //+1
+            addOne = ()=>{ 
+                const {count} = this.state
+                this.setState({count: count+1})
+            }
+            //卸载组件
+            unmountComponent = ()=>{
+                ReactDOM.unmountComponentAtNode(document.getElementsByClassName("test")[0])
+            }
+            //强制更新
+            forceUpdateComponent = ()=>{
+                this.forceUpdate();
+            }
+            //render
+            render(){
+                console.log("count --- render")
+                return (
+                    <div>
+                        <h2>当前求和为{this.state.count}</h2>
+                        <button onClick={this.addOne}>点我+1</button>    
+                        <button onClick={this.unmountComponent}>卸载组件</button> 
+                        <button onClick={this.forceUpdateComponent}>强制更新</button>
+                    </div>
+                )
+            }
+        }
+        
+        //父组件A
+        class A extends React.Component{
+            state = {carname: 'BMW'}
+
+            changeCar = ()=>{
+                this.setState({carname: '奔驰'})
+            }
+
+            render(){
+                console.log("A render")
+                return(
+                    <div>
+                        A
+                        <button onClick={this.changeCar}>changeCar</button>
+                        <B carname={this.state.carname}/>
+                    </div>
+                )
+            }
+        }
+        //子组件B
+        class B extends React.Component{
+            componentWillReceiveProps(){
+                console.log("componentWillReceiveProps")
+            }
+            render(){
+                return(
+                    <div>B显示汽车信息: {this.props.carname}</div>
+                    
+                )
+            }
+        }
+
+        //挂载组件
+        ReactDOM.render(<Calculate/>, document.getElementsByClassName('test')[0])
+    </script>
+</body>
+</html>
