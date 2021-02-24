@@ -1,0 +1,28 @@
+.footer {
+    width: 95%;
+    border-radius: 4px;
+    margin: 10px auto;
+}
+
+.footer {
+    border: 0px;
+    margin: 25px auto;
+}
+
+.footer span {
+    margin-left: 20px;
+}
+
+.footer button{
+    float: right;
+    background: red;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+
+input[type='checkbox'] {
+    vertical-align: middle;
+    margin-left: 10px;
+
+}
