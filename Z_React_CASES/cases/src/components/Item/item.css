@@ -6,6 +6,7 @@
     line-height: 30px;
     list-style-type: none;
     margin-bottom: -1px;
+    position: relative
 }
 
 .items span {
@@ -17,5 +18,14 @@
     top: 5px;
     right: 5px;
     background-color: red;
-    color: white
+    color: white;
+    display: none;
+}
+
+.items:hover {
+    background-color: #ddd
+}
+
+.items:hover button{
+    display: block
 }
